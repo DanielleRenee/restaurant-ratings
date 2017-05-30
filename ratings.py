@@ -1,95 +1,43 @@
 """Restaurant rating lister."""
 
-restaurant_ratings = {}
 
-print("\n")
-print("CURRENT RESTAURANT RATINGS")
-print("\n")
+def process_scores():
+    """Read scores file and return dictionary of {restaurant-name: score}."""
 
-def read_file(filename):
+    scores_txt = open('scores.txt')
 
-    f = open(filename)
-    for line in f:
-        line = line.strip()
-        line = line.split(":")
-        restaurant_ratings[line[0]] = line[1]
-    return restaurant_ratings
+    scores = {}
 
-#print read_file("scores.txt")
+    for line in scores_txt:
+        line = line.rstrip()
+        restaurant, score = line.split(":")
+        scores[restaurant] = int(score)
 
-def add_restaurant_rating(restaurants):
+    return scores
 
-    new_restaurant = raw_input("Would you like to add a new restaurant? " + 
-    "Please enter the name of a restaurant you would like to add? -->  ")   
 
-    print("\n")
+def add_restaurant(scores):
+    """Add a restaurant and rating."""
 
-    new_rating = int(raw_input("Please enter the restaurant's score. -->  "))
+    print "Please add a rating for your favorite restaurant!"
+    restaurant = raw_input("Restaurant name> ")
+    rating = int(raw_input("Rating> "))
 
-    print("\n")
+    scores[restaurant] = rating
 
-    restaurants[new_restaurant] = new_rating
 
-    return restaurants
+def print_sorted_scores(scores):
+    """Print restaurants and ratings, sorted."""
 
-restaurant_ratings = read_file('scores.txt')
-
-restaurant_ratings = add_restaurant_rating(restaurant_ratings)
-
-# print restaurant_ratings
-
-def sort(restaurant_ratings):
-
-    restaurant_ratings.items()
-    sorted_restaurant = sorted(restaurant_ratings.items())
- 
-    return sorted_restaurant
-# print("\n")
-
-def print_rest(sorted_restaurant):
-    
-    for restaurant, rating in sorted_restaurant:
+    for restaurant, rating in sorted(scores.items()):
         print "{} is rated at {}.".format(restaurant, rating)
 
 
+# read existing scores in from file
+scores = process_scores()
 
-# print("\n")
+# allow user to add a restaurant/rating pair
+add_restaurant(scores)
 
-# print restaurant_ratings
-
-    # answer = raw_input("Do you want to add a restaurant? Y/N")
-
-#print sorted_restaurant
-
-# restaurant_ratings = {}
-
-# print("\n")
-# print("CURRENT RESTAURANT RATINGS")
-# print("\n")
-
-# f = open("scores.txt")
-# for line in f:
-#     line = line.strip()
-#     line = line.split(":")
-
-#     restaurant_ratings[line[0]] = line[1]
-#     restaurant_ratings.items()
-#     sorted_restaurant = sorted(restaurant_ratings.items())
-
-# for restaurant, rating in sorted_restaurant:
-#     print "{} is rated at {}.".format(restaurant, rating)
-
-# print("\n")
-
-# new_restaurant = raw_input("Would you like to add a new restaurant? " + 
-# "Please enter the name of a restaurant you would like to add? -->  ")   
-
-# print("\n")
-
-# new_rating = int(raw_input("Please enter the restaurant's score. -->  "))
-
-# restaurant_ratings[new_restaurant] = new_rating
-
-# print("\n")
-
-# print restaurant_ratings
+# print an alphabetical list of all rated restaurants and their ratings
+print_sorted_scores(scores)
